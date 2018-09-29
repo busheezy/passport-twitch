@@ -1,4 +1,5 @@
 # passport-twitch
+
 [![Code Climate](https://codeclimate.com/github/Schmoopiie/passport-twitch/badges/gpa.svg)](https://codeclimate.com/github/Schmoopiie/passport-twitch)
 
 Twitch is a trademark or registered trademark of Twitch Interactive, Inc. in the U.S. and/or other countries. "passport-twitch" is not operated by, sponsored by, or affiliated with Twitch Interactive, Inc. in any way.
@@ -13,12 +14,14 @@ unobtrusively integrated into any application or framework that supports
 [Express](http://expressjs.com/).
 
 ## Install
+
 ```bash
-$ npm install passport-twitch
+npm install passport-twitch
 ```
+
 ## Usage of OAuth 2.0
 
-#### Configure Strategy
+### Configure Strategy
 
 The Twitch OAuth 2.0 authentication strategy authenticates users using a Twitch
 account and OAuth 2.0 tokens. The strategy requires a `verify` callback, which
@@ -26,8 +29,8 @@ accepts these credentials and calls `done` providing a user, as well as
 `options` specifying a client ID, client secret, and callback URL.
 
 ```javascript
-var passport       = require("passport");
-var twitchStrategy = require("passport-twitch").Strategy;
+const passport       = require("passport");
+const twitchStrategy = require("passport-twitch").Strategy;
 
 passport.use(new twitchStrategy({
     clientID: TWITCH_CLIENT_ID,
@@ -43,7 +46,7 @@ passport.use(new twitchStrategy({
 ));
 ```
 
-#### Authenticate Requests
+### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `"twitch"` strategy, to
 authenticate requests.
@@ -69,19 +72,18 @@ app.get("/auth/twitch", passport.authenticate("twitch", {forceVerify: true}));
 ## Example
 
 ```javascript
-var express        = require("express");
-var bodyParser     = require("body-parser");
-var cookieParser   = require("cookie-parser");
-var cookieSession  = require("cookie-session");
-var passport       = require("passport");
-var twitchStrategy = require("passport-twitch").Strategy;
+const express        = require("express");
+const bodyParser     = require("body-parser");
+const cookieParser   = require("cookie-parser");
+const cookieSession  = require("cookie-session");
+const passport       = require("passport");
+const twitchStrategy = require("passport-twitch").Strategy;
 
-var app = express();
+const app = express();
 
 app.set("views", "./views");
 app.set("view engine", "ejs");
 
-// Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cookieSession({secret:"somesecrettokenhere"}));
@@ -103,21 +105,21 @@ passport.use(new twitchStrategy({
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
 app.get("/", function (req, res) {
-    res.render("index");
+  res.render("index");
 });
 
 app.get("/auth/twitch", passport.authenticate("twitch"));
 app.get("/auth/twitch/callback", passport.authenticate("twitch", { failureRedirect: "/" }), function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/");
+  // Successful authentication, redirect home.
+  res.redirect("/");
 });
 
 app.listen(3000);

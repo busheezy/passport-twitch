@@ -1,6 +1,6 @@
 {
-  "name": "passport-twitch",
-  "version": "1.0.3",
+  "name": "passport-twitch-not-old",
+  "version": "2.0.0",
   "description": "Twitch (OAuth) authentication strategies for Passport.",
   "keywords": [
     "passport",
@@ -13,6 +13,10 @@
     "oauth2",
     "strategy"
   ],
+  "scripts": {
+    "lint": "eslint --ext .js --ignore-path .gitignore .",
+    "lintfix": "eslint --ext .js --ignore-path .gitignore . --fix"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/Schmoopiie/passport-twitch.git"
@@ -33,14 +37,13 @@
   ],
   "main": "./lib/passport-twitch",
   "dependencies": {
-    "passport-oauth2": "^1.1.2",
-    "pkginfo": "0.2.x"
+    "passport-oauth2": "^1.1.2"
   },
   "devDependencies": {
-    "vows": "0.6.x"
-  },
-  "engines": {
-    "node": ">=0.10.0"
+    "babel-eslint": "^10.0.1",
+    "eslint": "5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "2.14.0"
   },
   "maintainers": [
     {
