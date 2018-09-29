@@ -29,21 +29,18 @@ accepts these credentials and calls `done` providing a user, as well as
 `options` specifying a client ID, client secret, and callback URL.
 
 ```javascript
-const passport       = require("passport");
-const twitchStrategy = require("passport-twitch").Strategy;
+const passport = require('passport');
+const twitchStrategy = require('passport-twitch').Strategy;
 
 passport.use(new twitchStrategy({
-    clientID: TWITCH_CLIENT_ID,
-    clientSecret: TWITCH_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/twitch/callback",
-    scope: "user:read:email analytics:read:games"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ twitchId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+  clientID: TWITCH_CLIENT_ID,
+  clientSecret: TWITCH_CLIENT_SECRET,
+  callbackURL: 'http://127.0.0.1:3000/auth/twitch/callback',
+  scope: 'user:read:email analytics:read:games',
+},
+((accessToken, refreshToken, profile, done) => {
+  User.findOrCreate({ twitchId: profile.id }, (err, user) => done(err, user));
+})));
 ```
 
 ### Authenticate Requests
@@ -55,10 +52,10 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```javascript
-app.get("/auth/twitch", passport.authenticate("twitch"));
-app.get("/auth/twitch/callback", passport.authenticate("twitch", { failureRedirect: "/" }), function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/");
+app.get('/auth/twitch', passport.authenticate('twitch'));
+app.get('/auth/twitch/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (req, res) => {
+  // Successful authentication, redirect home.
+  res.redirect('/');
 });
 ```
 
@@ -72,54 +69,51 @@ app.get("/auth/twitch", passport.authenticate("twitch", {forceVerify: true}));
 ## Example
 
 ```javascript
-const express        = require("express");
-const bodyParser     = require("body-parser");
-const cookieParser   = require("cookie-parser");
-const cookieSession  = require("cookie-session");
-const passport       = require("passport");
-const twitchStrategy = require("passport-twitch").Strategy;
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const twitchStrategy = require('passport-twitch').Strategy;
 
 const app = express();
 
-app.set("views", "./views");
-app.set("view engine", "ejs");
+app.set('views', './views');
+app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cookieSession({secret:"somesecrettokenhere"}));
+app.use(cookieSession({ secret: 'somesecrettokenhere' }));
 app.use(passport.initialize());
-app.use(express.static("./public"));
+app.use(express.static('./public'));
 
 passport.use(new twitchStrategy({
-    clientID: "098f6bcd4621d373cade4e832627b4f6",
-    clientSecret: "4eb20288afaed97e82bde371260db8d8",
-    callbackURL: "http://127.0.0.1:3000/auth/twitch/callback",
-    scope: "user:read:email analytics:read:games"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // Suppose we are using mongo..
-    User.findOrCreate({ twitchId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+  clientID: '098f6bcd4621d373cade4e832627b4f6',
+  clientSecret: '4eb20288afaed97e82bde371260db8d8',
+  callbackURL: 'http://127.0.0.1:3000/auth/twitch/callback',
+  scope: 'user:read:email analytics:read:games',
+},
+((accessToken, refreshToken, profile, done) => {
+  // Suppose we are using mongo..
+  User.findOrCreate({ twitchId: profile.id }, (err, user) => done(err, user));
+})));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-app.get("/", function (req, res) {
-  res.render("index");
+app.get('/', (req, res) => {
+  res.render('index');
 });
 
-app.get("/auth/twitch", passport.authenticate("twitch"));
-app.get("/auth/twitch/callback", passport.authenticate("twitch", { failureRedirect: "/" }), function(req, res) {
+app.get('/auth/twitch', passport.authenticate('twitch'));
+app.get('/auth/twitch/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (req, res) => {
   // Successful authentication, redirect home.
-  res.redirect("/");
+  res.redirect('/');
 });
 
 app.listen(3000);
