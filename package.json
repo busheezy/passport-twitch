@@ -32,13 +32,13 @@
       "url": "http://www.opensource.org/licenses/MIT"
     }
   ],
-  "main": "./lib/passport-twitch",
+  "main": "./lib",
   "dependencies": {
     "passport-oauth2": "^1.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "eslint": "5.3.0",
+    "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "2.14.0"
   },
