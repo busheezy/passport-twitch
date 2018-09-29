@@ -1,7 +1,7 @@
 {
   "name": "passport-twitch-not-old",
   "version": "2.0.0",
-  "description": "Twitch (OAuth 2.0) authentication strategies for Passport.",
+  "description": "Twitch (OAuth) authentication strategies for Passport.",
   "keywords": [
     "passport",
     "twitch",
@@ -19,7 +19,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/busheezy/passport-twitch.git"
+    "url": "git://github.com/Schmoopiie/passport-twitch.git"
+  },
+  "bugs": {
+    "url": "http://github.com/Schmoopiie/passport-twitch/issues"
   },
   "author": {
     "name": "Schmoopiie",
@@ -44,8 +47,10 @@
   },
   "maintainers": [
     {
-      "name": "BuSheeZy",
-      "email": "busheezy@gmail.com"
+      "name": "Schmoopiie",
+      "email": "Schmoopiie@gmail.com"
     }
-  ]
+  ],
+  "directories": {},
+  "homepage": "https://github.com/Schmoopiie/passport-twitch"
 }
